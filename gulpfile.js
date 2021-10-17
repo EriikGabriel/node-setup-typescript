@@ -25,6 +25,10 @@ function compileTs() {
   })
     .plugin(tsify)
     .bundle()
+    .on("error", function (error) {
+      console.error("❌ - Compile Error: \n" + error.toString());
+      this.emit("end");
+    })
     .pipe(source("bundle.js"))
     .pipe(gulp.dest(DESTINATION));
 }
